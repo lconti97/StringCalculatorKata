@@ -31,5 +31,17 @@ namespace StringCalculatorTest
         {
             Assert.AreEqual(3, calculator.Add("1,2"));
         }
+
+        [TestMethod]
+        public void OneTwoThreeReturnsSix()
+        {
+            Assert.AreEqual(6, calculator.Add("1,2,3"));
+        }
+
+        [TestMethod]
+        public void NewLinesAsDelimitersIsOk()
+        {
+            Assert.AreEqual(6, calculator.Add("1\n2,3"));
+        }
     }
 }

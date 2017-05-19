@@ -10,7 +10,8 @@ namespace StringCalculator
             if (String.IsNullOrWhiteSpace(input))
                 return 0;
 
-            var numArray = input.Split(',');
+            var delims = ",\n".ToCharArray();
+            var numArray = input.Split(delims);
             
             return numArray.Select(n => Convert.ToInt32(n)).Sum();
         }
