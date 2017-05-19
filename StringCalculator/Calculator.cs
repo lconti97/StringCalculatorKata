@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace StringCalculator
 {
@@ -9,7 +10,9 @@ namespace StringCalculator
             if (String.IsNullOrWhiteSpace(input))
                 return 0;
 
-            return Convert.ToInt32(input);
+            var numArray = input.Split(',');
+            
+            return numArray.Select(n => Convert.ToInt32(n)).Sum();
         }
     }
 }

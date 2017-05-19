@@ -25,5 +25,11 @@ namespace StringCalculatorTest
         {
             Assert.AreEqual(1, calculator.Add("1"));
         }
+
+        [TestMethod]
+        public void OneTwoReturnsThree()
+        {
+            Assert.AreEqual(3, calculator.Add("1,2"));
+        }
     }
 }
