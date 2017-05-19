@@ -5,6 +5,7 @@ namespace StringCalculator
 {
     public class Calculator
     {
+        private const Int32 MaxInputValue = 1000;
         public Int32 Add(String input)
         {
             if (String.IsNullOrWhiteSpace(input))
@@ -18,7 +19,7 @@ namespace StringCalculator
                 input = input.Substring(input.IndexOf('\n') + 1);
             }
 
-            var nums = input.Split(delims.ToArray()).Select(n => Convert.ToInt32(n));
+            var nums = input.Split(delims.ToArray()).Select(n => Convert.ToInt32(n)).Where(n => n < MaxInputValue);
             var negatives = nums.Where(n => n < 0);
 
             if (negatives.Any())

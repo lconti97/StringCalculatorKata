@@ -69,5 +69,11 @@ namespace StringCalculatorTest
             var exception = Assert.ThrowsException<NegativeNumberException>(() => calculator.Add("-1,-2"));
             Assert.AreEqual("-1, -2 are not allowed.", exception.Message);
         }
+
+        [TestMethod]
+        public void NumbersLargerThan1000AreIgnored()
+        {
+            Assert.AreEqual(2, calculator.Add("2,1001"));
+        }
     }
 }
