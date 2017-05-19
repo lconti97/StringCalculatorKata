@@ -6,7 +6,10 @@ namespace StringCalculator
     {
         public Int32 Add(String input)
         {
-            return 0;
+            if (String.IsNullOrWhiteSpace(input))
+                return 0;
+
+            return Convert.ToInt32(input);
         }
     }
 }

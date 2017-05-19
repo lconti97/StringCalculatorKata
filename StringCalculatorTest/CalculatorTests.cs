@@ -19,5 +19,11 @@ namespace StringCalculatorTest
         {
             Assert.AreEqual(0, calculator.Add(String.Empty));
         }
+
+        [TestMethod]
+        public void OneReturnsOne()
+        {
+            Assert.AreEqual(1, calculator.Add("1"));
+        }
     }
 }
