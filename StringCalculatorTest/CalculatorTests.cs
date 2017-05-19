@@ -43,5 +43,17 @@ namespace StringCalculatorTest
         {
             Assert.AreEqual(6, calculator.Add("1\n2,3"));
         }
+
+        [TestMethod]
+        public void NewLinesAsDelimitersIsOkPartTwo()
+        {
+            Assert.AreEqual(6, calculator.Add("1,2\n3"));
+        }
+
+        [TestMethod]
+        public void CustomDelimitersWork()
+        {
+            Assert.AreEqual(3, calculator.Add("//;\n1;2"));
+        }
     }
 }
