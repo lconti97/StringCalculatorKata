@@ -55,5 +55,12 @@ namespace StringCalculatorTest
         {
             Assert.AreEqual(3, calculator.Add("//;\n1;2"));
         }
+
+        [TestMethod]
+        public void AddingANegativeNumberThrowsException()
+        {
+            var exception = Assert.ThrowsException<NegativeNumberException>(() => calculator.Add("1,-2"));
+            Assert.AreEqual("-2 is not allowed.", exception.Message);
+        }
     }
 }

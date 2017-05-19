@@ -17,9 +17,13 @@ namespace StringCalculator
                 input = input.Substring(input.IndexOf('\n') + 1);
             }
 
-            var numArray = input.Split(delims.ToArray());
-            
-            return numArray.Select(n => Convert.ToInt32(n)).Sum();
+            var nums = input.Split(delims.ToArray()).Select(n => Convert.ToInt32(n));
+
+            var negatives = nums.Where(n => n < 0);
+            if (negatives.Any())
+                throw new NegativeNumberException(negatives.First() + " is not allowed.");
+
+            return nums.Sum();
         }
     }
 }
