@@ -62,5 +62,12 @@ namespace StringCalculatorTest
             var exception = Assert.ThrowsException<NegativeNumberException>(() => calculator.Add("1,-2"));
             Assert.AreEqual("-2 is not allowed.", exception.Message);
         }
+
+        [TestMethod]
+        public void AddingMultipleNegativeNumbersThrowsException()
+        {
+            var exception = Assert.ThrowsException<NegativeNumberException>(() => calculator.Add("-1,-2"));
+            Assert.AreEqual("-1, -2 are not allowed.", exception.Message);
+        }
     }
 }

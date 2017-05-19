@@ -11,6 +11,7 @@ namespace StringCalculator
                 return 0;
 
             var delims = ",\n".ToCharArray().ToList();
+
             if (input.StartsWith("//"))
             {
                 delims.Add(input.ToCharArray()[2]);
@@ -18,10 +19,14 @@ namespace StringCalculator
             }
 
             var nums = input.Split(delims.ToArray()).Select(n => Convert.ToInt32(n));
-
             var negatives = nums.Where(n => n < 0);
+
             if (negatives.Any())
-                throw new NegativeNumberException(negatives.First() + " is not allowed.");
+            {
+                var errorMessage = String.Join(", ", negatives) + (negatives.Count() == 1 ? " is" : " are")
+                    + " not allowed.";
+                throw new NegativeNumberException(errorMessage);
+            }
 
             return nums.Sum();
         }
