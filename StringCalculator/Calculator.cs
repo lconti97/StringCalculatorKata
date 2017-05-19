@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StringCalculator
@@ -11,15 +13,35 @@ namespace StringCalculator
             if (String.IsNullOrWhiteSpace(input))
                 return 0;
 
-            var delims = ",\n".ToCharArray().ToList();
+            String[] numStringArray;
 
-            if (input.StartsWith("//"))
+            var startsWithSpecialDelimiter = input.StartsWith("//");
+
+            if (startsWithSpecialDelimiter)
             {
-                delims.Add(input.ToCharArray()[2]);
-                input = input.Substring(input.IndexOf('\n') + 1);
+                var specialDelimiterIsLong = input.StartsWith("//[");
+
+                if (specialDelimiterIsLong)
+                {
+                    var indexOfOpenBracket = 2;
+                    var indexOfClosedBracket = input.IndexOf(']');
+                    var delims = input.Substring(indexOfOpenBracket + 1, indexOfClosedBracket - indexOfOpenBracket - 1);
+                    numStringArray = input.Substring(indexOfClosedBracket + 1)
+                        .Split(new[] { delims }, StringSplitOptions.None);
+                }
+                else
+                {
+                    var delims = input.Substring(2, 1);
+                    numStringArray = input.Substring(4).Split(delims.ToArray());
+                }
+            }
+            else
+            {
+                var delims = ",\n".ToCharArray().ToList();
+                numStringArray = input.Split(delims.ToArray());
             }
 
-            var nums = input.Split(delims.ToArray()).Select(n => Convert.ToInt32(n)).Where(n => n < MaxInputValue);
+            var nums = numStringArray.Select(n => Convert.ToInt32(n)).Where(n => n < MaxInputValue).ToList();
             var negatives = nums.Where(n => n < 0);
 
             if (negatives.Any())
