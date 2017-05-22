@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +12,26 @@ namespace StringCalculator
             if (String.IsNullOrWhiteSpace(input))
                 return 0;
 
+            List<int> nums = GetNumsFromString(input);
+            CheckForNegatives(nums);
+
+            return nums.Sum();
+        }
+
+        private static void CheckForNegatives(List<int> nums)
+        {
+            var negatives = nums.Where(n => n < 0);
+
+            if (negatives.Any())
+            {
+                var errorMessage = String.Join(", ", negatives) + (negatives.Count() == 1 ? " is" : " are")
+                    + " not allowed.";
+                throw new NegativeNumberException(errorMessage);
+            }
+        }
+
+        private static List<Int32> GetNumsFromString(String input)
+        {
             String[] numStringArray;
 
             var startsWithSpecialDelimiter = input.StartsWith("//");
@@ -24,10 +43,12 @@ namespace StringCalculator
                 if (specialDelimiterIsLong)
                 {
                     var indexOfOpenBracket = 2;
-                    var indexOfClosedBracket = input.IndexOf(']');
-                    var delims = input.Substring(indexOfOpenBracket + 1, indexOfClosedBracket - indexOfOpenBracket - 1);
-                    numStringArray = input.Substring(indexOfClosedBracket + 1)
-                        .Split(new[] { delims }, StringSplitOptions.None);
+
+                    var delimInputs = input.Substring(indexOfOpenBracket + 1, input.IndexOf('\n') - indexOfOpenBracket - 2);
+                    var numInputs = input.Substring(input.IndexOf('\n') + 1);
+
+                    var delims = delimInputs.Split(new[] { "][" }, StringSplitOptions.RemoveEmptyEntries);
+                    numStringArray = numInputs.Split(delims, StringSplitOptions.None);
                 }
                 else
                 {
@@ -42,16 +63,7 @@ namespace StringCalculator
             }
 
             var nums = numStringArray.Select(n => Convert.ToInt32(n)).Where(n => n < MaxInputValue).ToList();
-            var negatives = nums.Where(n => n < 0);
-
-            if (negatives.Any())
-            {
-                var errorMessage = String.Join(", ", negatives) + (negatives.Count() == 1 ? " is" : " are")
-                    + " not allowed.";
-                throw new NegativeNumberException(errorMessage);
-            }
-
-            return nums.Sum();
+            return nums;
         }
     }
 }

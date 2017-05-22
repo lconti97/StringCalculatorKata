@@ -81,5 +81,11 @@ namespace StringCalculatorTest
         {
             Assert.AreEqual(6, calculator.Add("//[***]\n1***2***3"));
         }
+
+        [TestMethod]
+        public void MultipleDelimitersCanBeOfAnyLength()
+        {
+            Assert.AreEqual(6, calculator.Add("//[*][%]\n1*2%3"));
+        }
     }
 }
